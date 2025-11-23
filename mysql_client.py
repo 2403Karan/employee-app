@@ -5,13 +5,9 @@ from sqlalchemy import (BigInteger, Column, Date, Float, Integer, String,TIMESTA
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import func, desc, and_,between
-from sqlalchemy.dialects.mysql import insert
-from sqlalchemy import delete,select,join,text
+from sqlalchemy import delete,select,join
 import json
 from model import Employees,Salaries,Departments,Dept_manager,Dept_emp,Titles
-import os
-import datetime
-from flask import Flask,request,jsonify
  
 connectionString = 'mysql://%s:%s@%s/%s' % ('pymsql','pymsql123','127.0.0.1:3306','employees')
 Base = declarative_base()
@@ -74,7 +70,6 @@ def salary(records):
     return json_data
         
 
-# INSERT EMPLOYEES(POST METHOD)
 def insertEmployee(dataToBeInserted):
     try:
         results=session.execute(Employees.__table__.insert(),dataToBeInserted)
@@ -89,7 +84,6 @@ def insertEmployee(dataToBeInserted):
         raise
     
     
-# GET INFORMATION OF EMPLOYEES(GET METHOD)
 def getEmployeeById(empNo,date):
     if date is None:
         query=session.query(Employees).filter(Employees.emp_no == empNo).all()
@@ -124,13 +118,11 @@ def getEmployeeByName(page,page_size,name):
         records=con.execute(stmt1).fetchall()
     return recordInJson(records)
 
-
-# put method: to update data in database   
 def updateRecordsOfEmployee(empNo,data):
     try:
         jsonObj={}
         if 'birthDate' in data:
-            jsonObj["birth_date"] = data['birthDate']   # you're assigning the value from the data['birthDate'] dictionary key to the jsonObj["birth_date"] key. 
+            jsonObj["birth_date"] = data['birthDate']  
         if 'firstName' in data:
             jsonObj['first_name']=data['firstName'],
         if 'lastName' in data:
@@ -147,7 +139,6 @@ def updateRecordsOfEmployee(empNo,data):
         print("Could not update into Employees table")
         raise
     
-# delete method:TO Delete any employee data
 def deleteEmployeeData(empNo):
     try:
         stmt = delete(Employees).where(Employees.emp_no == empNo)
