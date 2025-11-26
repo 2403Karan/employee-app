@@ -9,7 +9,7 @@ from sqlalchemy import delete,select,join
 import json
 from model import Employees,Salaries,Departments,Dept_manager,Dept_emp,Titles
  
-connectionString = 'mysql://%s:%s@%s/%s' % ('pymsql','pymsql123','127.0.0.1:3306','employees')
+connectionString = 'mysql://%s:%s@%s/%s' % ('pymsql','*******','127.0.0.1:3306','employees')
 Base = declarative_base()
 engine = create_engine(connectionString, isolation_level="READ UNCOMMITTED", pool_recycle=3600)
 Base.metadata.bind = engine
