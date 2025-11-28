@@ -3,6 +3,7 @@ import mysql_client
 import json
 app=Flask(__name__)
 
+
 @app.route('/employee',methods=["POST"])
 def insertEmployeeInTable():
     if request.method=="POST":
