@@ -6,10 +6,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import func, desc, and_,between
 from sqlalchemy import delete,select,join
-import json
+import json,os
 from model import Employees,Salaries,Departments,Dept_manager,Dept_emp,Titles
- 
-connectionString = 'mysql://%s:%s@%s/%s' % ('pymsql','*******','127.0.0.1:3306','employees')
+from dotenv import load_dotenv
+load_dotenv() 
+
+connectionString = 'mysql://%s:%s@%s/%s' % (os.getenv('DB_USER'), os.getenv('DB_PASSWORD'), os.getenv('DB_HOST'), os.getenv('DB_NAME'))
 Base = declarative_base()
 engine = create_engine(connectionString, isolation_level="READ UNCOMMITTED", pool_recycle=3600)
 Base.metadata.bind = engine
